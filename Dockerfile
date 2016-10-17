@@ -1,5 +1,5 @@
 FROM python:2.7-slim
-MAINTAINER Helder Correia <me@heldercorreia.com>
+MAINTAINER Helder Correia <https://github.com/helderco/>
 
 RUN apt-get update && \
     apt-get install git --no-install-recommends -y && \
