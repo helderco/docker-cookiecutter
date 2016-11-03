@@ -10,15 +10,13 @@ fi
 
 cd /data
 
+# map user to volume owner
+. "/mapuid.sh"
+
 # use '-' as first argument to skip entrypoint
 if [ "$1" == "-" ]; then
     shift
     exec "$@"
-fi
-
-# list all included templates
-if [ "$1" == "ls" ]; then
-    exec ls /usr/src/templates/
 fi
 
 # Default to django template from github
@@ -26,10 +24,4 @@ if [ $# -eq 0 ]; then
     set -- gh:helderco/django-template
 fi
 
-# attempt to use an included template
-if [ ! -z $1 ] && [ -d "/usr/src/templates/$1" ]; then
-    exec cookiecutter "/usr/src/templates/$@"
-else
-    # use image as a binary
-    exec cookiecutter "$@"
-fi
+exec gosu python cookiecutter "$@"
